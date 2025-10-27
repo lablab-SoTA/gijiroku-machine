@@ -2,7 +2,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.routers import transcribe
@@ -30,10 +30,10 @@ def create_app() -> FastAPI:
     static_dir = Path(__file__).parent.parent / "frontend" / "dist"
 
     @app.get("/", include_in_schema=False)
-    async def index() -> FileResponse | dict[str, str]:
+    async def index():
         if static_dir.exists():
             return FileResponse(static_dir / "index.html")
-        return {"message": "gijiroku-machine API is running"}
+        return JSONResponse({"message": "gijiroku-machine API is running"})
 
     if static_dir.exists():
         assets_dir = static_dir / "assets"
@@ -41,7 +41,7 @@ def create_app() -> FastAPI:
             app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
         @app.get("/{full_path:path}", include_in_schema=False)
-        async def spa_routes(full_path: str) -> FileResponse:
+        async def spa_routes(full_path: str):
             return FileResponse(static_dir / "index.html")
 
     app.include_router(transcribe.router)
