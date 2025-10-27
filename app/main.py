@@ -28,14 +28,17 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     static_dir = Path(__file__).parent.parent / "frontend" / "dist"
+
+    @app.get("/", include_in_schema=False)
+    async def index() -> FileResponse | dict[str, str]:
+        if static_dir.exists():
+            return FileResponse(static_dir / "index.html")
+        return {"message": "gijiroku-machine API is running"}
+
     if static_dir.exists():
         assets_dir = static_dir / "assets"
         if assets_dir.exists():
             app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
-
-        @app.get("/", include_in_schema=False)
-        async def index() -> FileResponse:
-            return FileResponse(static_dir / "index.html")
 
         @app.get("/{full_path:path}", include_in_schema=False)
         async def spa_routes(full_path: str) -> FileResponse:
