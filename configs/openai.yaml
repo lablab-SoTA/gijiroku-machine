@@ -1,0 +1,5 @@
+model: gpt-4o-transcribe-diariz
+summarizer_model: gpt-4o-mini
+max_upload_minutes: 120
+max_upload_mb: 200
+language: ja

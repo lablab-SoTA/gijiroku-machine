@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+
+# Environment
+.env
+.env.local
+
+# Node / Vite
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# macOS
+.DS_Store

@@ -1,0 +1,7 @@
+{
+  "language": "ja",
+  "segments": [
+    {"speaker": "A", "start": 0.0, "end": 12.3, "text": "おはようございます。"},
+    {"speaker": "B", "start": 12.3, "end": 28.8, "text": "本日の議題を始めましょう。"}
+  ]
+}
